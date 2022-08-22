@@ -19,12 +19,13 @@ class App extends Component {
       // const addr = await window.ethereum.request({method: "eth_requestAccounts"})
   
       const provider = new ethers.providers.Web3Provider(window.ethereum)
+      window.ethereum.enable();
       const signer = provider.getSigner();
       const messageToSign = "Verify me on SAO joint mining!";
       const signature = await signer.signMessage(messageToSign);
       const signerAddr = await ethers.utils.verifyMessage(messageToSign, signature)
       // validate address if in sao joint mining.
-      const {data} = await axios.get(`https://staging-api.sao.network/sao-admin/api/admin/getUserDetailByAddress?address=${signerAddr}`, {
+      const {data} = await axios.get(`https://api.sao.network/sao-admin/api/admin/getUserDetailByAddress?address=${signerAddr}`, {
         headers: {
           'Authorization': 'Bearer 9GMjzTRtkK6DdqqdenOeJ7FIhHS2ghUV34D'
         }
